@@ -19,9 +19,9 @@
 // 10. Escriu una consulta per trobar els restaurants que es localitzen en valor de latitud menys de -95.754168.
         db.restaurant.find({"address.coord" :{$lt : -95.754168}});
 // 11. Escriu una consulta de MongoDB per a trobar els restaurants que no preparen cap cuisine de 'American' i la seva qualificació és superior a 70 i longitud inferior a -65.754168.
-        db.restaurant.find( {$and:[ {cuisine: {$ne : "American "}}, {"grades.score" : {$gt:70}},{ "address.coord": {$lt : -65.754168}}]});
+        db.restaurant.find({cuisine: {$ne : "American "}, "grades.score" : {$gt:70}, "address.coord": {$lt : -65.754168}});
 // 12. Escriu una consulta per trobar els restaurants que no preparen cap cuisine de 'American' i van aconseguir un marcador més de 70 i localitzat en la longitud menys que -65.754168. Nota: Fes aquesta consulta sense utilitzar $and operador.
-       db.restaurant.find({cuisine: {$ne : "American "}, "grades.score" : {$gt:70}, "address.coord": {$lt : -65.754168}});
+       db.restaurant.find({$and:[ {cuisine: {$ne : "American "}, "grades.score" : {$gt:70}, "address.coord": {$lt : -65.754168}}]});
 // 13. Escriu una consulta per trobar els restaurants que no preparen cap cuisine de 'American' i van obtenir un punt de grau 'A' no pertany a Brooklyn. S'ha de mostrar el document segons la cuisine en ordre descendent.
        db.restaurant.find({$and:[{cuisine:{$ne:"American "}},{"grades.grade":"A"},{borough:{$ne:"Brooklyn"}}]}).sort({cuisine:-1});
 // 14. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que contenen 'Wil' com les tres primeres lletres en el seu nom.
@@ -39,7 +39,7 @@
 // 20. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que aconsegueixin un marcador que no és més de 10.
         db.restaurant.find({"grades.score":{$lte:10}},{restaurant_id:1, name:1, borough:1,cuisine:1,_id:0});
 // 21. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que preparen peix excepte 'American' i 'Chinees' o el name del restaurant comença amb lletres 'Wil'.
-        db.restaurant.find({$or:[{$and:[{cuisine:{$ne:"American "}},{cuisine:{$ne:"Chinese"}},{cuisine:/Fish/i}]}, {name:{$regex:/^Wil/,$options:"i"}}]},{restaurant_id:1, name:1, boorugh:1,cuisine:1,_id:0});
+        db.restaurant.find({$or:[{$and:[{cuisine:{$ne:"American "}},{cuisine:{$ne:"Chinese"}},{cuisine:/Fish/i}]}, {name:{$regex:/^Wil/,$options:"i"}}]},{restaurant_id:1, name:1, borough:1,cuisine:1,_id:0});
 // 22. Escriu una consulta per trobar el restaurant_id, name, i grades per a aquells restaurants que aconsegueixin un grau "A" i un score 11 en dades d'estudi ISODate "2014-08-11T00:00:00Z".
         db.restaurant.find({grades:{$elemMatch:{grade:"A", score:11, date: ISODate("2014-08-11T00:00:00Z")}}},{restaurant_id:1, name:1, grades:1,_id:0});
 // 23. Escriu una consulta per trobar el restaurant_id, name i grades per a aquells restaurants on el 2n element de varietat de graus conté un grau de "A" i marcador 9 sobre un ISODate "2014-08-11T00:00:00Z".
